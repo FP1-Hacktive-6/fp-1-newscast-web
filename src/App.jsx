@@ -1,3 +1,4 @@
+import Nav from "./components/Navbar";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getTopHeadlinesNews } from "./stores/news/newsAction";
@@ -33,11 +34,14 @@ const App = () => {
 	}, []);
 
 	return (
-		<div className="flex flex-col min-h-screen">
-			<div className="flex flex-wrap flex-col gap-5">
-				{data.map((item, idx) => (
-					<div key={idx}>{item.title}</div>
-				))}
+		<div>
+			<Nav />
+			<div className="flex flex-col min-h-screen">
+				<div className="flex flex-col flex-wrap gap-5">
+					{data.map((item, idx) => (
+						<div key={idx}>{item.title}</div>
+					))}
+				</div>
 			</div>
 		</div>
 	);
