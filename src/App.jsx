@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getTopHeadlinesNews } from "./stores/news/newsAction";
 import toast from "react-hot-toast";
+import Footer from "./components/Footer";
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -43,6 +44,7 @@ const App = () => {
 					))}
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 };
