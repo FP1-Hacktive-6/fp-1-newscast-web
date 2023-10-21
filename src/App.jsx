@@ -1,4 +1,4 @@
-import Nav from "./page/Nav"
+import Nav from "./components/Navbar"
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getTopHeadlinesNews } from "./stores/news/newsAction";
