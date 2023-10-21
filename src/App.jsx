@@ -1,3 +1,4 @@
+import Nav from "./components/Navbar"
 import Nav from "./page/Nav"
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
