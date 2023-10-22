@@ -1,20 +1,22 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import Nav from "./components/Navbar";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getTopHeadlinesNews } from "./stores/news/newsAction";
 import toast from "react-hot-toast";
 
 const App = () => {
 	const dispatch = useDispatch();
-	const [data, setData] = useState([]);
+	const { isLoading, error, data } = useSelector((state) => state.news);
 
 	// contoh penggunaan
 	const handleGetAllNewsBasedOnCountry = async () => {
 		// data params bisa dimasukin disini ( check available params di doc newsapi)
 		const data = {
 			params: {
-				country: "id",
+				country: "us",
 				page: 1,
 				pageSize: 10,
+				q: "us",
 			},
 		};
 
@@ -24,7 +26,6 @@ const App = () => {
 				toast.error(res.payload.response.data.message);
 				return;
 			}
-			setData(res.payload.articles);
 		});
 	};
 
@@ -32,9 +33,21 @@ const App = () => {
 		handleGetAllNewsBasedOnCountry();
 	}, []);
 
+	if (error) {
+		return <h1>Opps Error here</h1>;
+	}
+
 	return (
 		<div>
-			<h1>App</h1>
+			<Nav />
+			<div className="flex flex-col min-h-screen">
+				<div className="flex flex-col flex-wrap gap-5">
+					{data.map((item, idx) => (
+						<div key={idx}>{item.title}</div>
+					))}
+				</div>
+			</div>
+			<Footer />
 		</div>
 	);
 };
