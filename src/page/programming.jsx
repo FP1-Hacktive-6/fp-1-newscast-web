@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getEverythingNews, getTopHeadlinesNews } from "../stores/news/newsAction";
+import { getEverythingNews } from "../stores/news/newsAction";
 import toast from "react-hot-toast";
 
 const programming = () => {
@@ -12,7 +12,7 @@ const programming = () => {
 		// data params bisa dimasukin disini ( check available params di doc newsapi)
 		const data = {
 			params: {
-        q:"programming",
+                q:"programming",
 				page: 1,
 				pageSize: 12,
 			},

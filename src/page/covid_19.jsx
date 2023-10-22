@@ -34,7 +34,7 @@ const covid_19 = () => {
 	}, []);
 
     return (
-        <div className='p-5'>
+        <div className='p-4'>
         <div className="w-full p-3 text-justify grid grid-cols-1 gap-2  md:grid-cols-2 md:gap-3 xl:grid-cols-3 xl:gap-4 aspect-[4/3]">
         {data.map((item, idx) => (
 		<div key={idx}>
