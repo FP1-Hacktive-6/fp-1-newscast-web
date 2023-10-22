@@ -1,4 +1,3 @@
-import Nav from "./components/Navbar";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTopHeadlinesNews } from "./stores/news/newsAction";
@@ -39,7 +38,6 @@ const App = () => {
 
 	return (
 		<div>
-			<Nav />
 			<div className="flex flex-col min-h-screen">
 				<div className="flex flex-col flex-wrap gap-5">
 					{data.map((item, idx) => (
@@ -47,7 +45,6 @@ const App = () => {
 					))}
 				</div>
 			</div>
-			<Footer />
 		</div>
 	);
 };
