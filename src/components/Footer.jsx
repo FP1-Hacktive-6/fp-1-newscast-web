@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
 
-const footer = () => {
+export default function Footer() {
     return (
-        <h1>this is footer </h1>
-    )
+        <footer >
+            <div className="p-6 text-center bg-neutral-200">
+                <span>© 2023 Copyright:</span>
+                <a href="https://github.com/orgs/FP1-Hacktive-6/people" className="pl-2">kelompok 6</a>
+            </div>
+        </footer>
+    );
 }
-
-export default footer;
