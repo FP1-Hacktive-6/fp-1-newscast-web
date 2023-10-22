@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTopHeadlinesNews } from "./stores/news/newsAction";
 import toast from "react-hot-toast";
+import Footer from "./components/Footer";
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -47,6 +48,7 @@ const App = () => {
 						: data.map((item, idx) => <div key={idx}>{item.title}</div>)}
 				</div>
 			</div>
+			<Footer />
 		</div>
 	);
 };
