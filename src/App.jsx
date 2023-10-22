@@ -1,9 +1,7 @@
-import Nav from "./components/Navbar";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTopHeadlinesNews } from "./stores/news/newsAction";
 import toast from "react-hot-toast";
-import Footer from "./components/Footer";
 
 const App = () => {
 	const dispatch = useDispatch();
@@ -40,15 +38,13 @@ const App = () => {
 
 	return (
 		<div>
-			<Nav />
 			<div className="flex flex-col min-h-screen">
 				<div className="flex flex-col flex-wrap gap-5">
-					{isLoading
-						? "Loading..."
-						: data.map((item, idx) => <div key={idx}>{item.title}</div>)}
+					{data.map((item, idx) => (
+						<div key={idx}>{item.title}</div>
+					))}
 				</div>
 			</div>
-			<Footer />
 		</div>
 	);
 };
