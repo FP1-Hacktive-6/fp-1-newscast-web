@@ -58,7 +58,7 @@ const covid_19 = () => {
           </p>
           <a className="inline-block" href={item.url}>
             <button
-              className="flex select-none items-center gap-2 rounded-lg py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-red-500 transition-all hover:bg-slate-50 active:bg-blue-700 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+              className=" transition ease-in-out delay-100  hover:-translate-y-1 hover:scale-110  duration-300 flex select-none items-center gap-2 rounded-lg m-2 py-3 px-3 text-center align-middle font-sans text-xs font-bold uppercase text-red-500  hover:bg-slate-50 active:bg-gray-500 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               type="button"
             >
               Read More
@@ -79,6 +79,27 @@ const covid_19 = () => {
               </svg>
             </button>
             </a>
+            <button
+              className="transition ease-in-out delay-100  hover:-translate-y-1 hover:scale-110  duration-300 flex select-none bg-black items-center gap-2 rounded-lg py-3 px-3 text-center align-middle font-sans text-xs font-bold uppercase text-red-500  hover:bg-slate-50 active:bg-black disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+              type="button">
+              Add BookMark
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="2"
+                stroke="currentColor"
+                aria-hidden="true"
+                className="h-5 w-5"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"
+
+                ></path>
+              </svg>
+            </button>
         </div>
       </div>              
 	</div>
