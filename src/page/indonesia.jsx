@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { getEverythingNews} from "../stores/news/newsAction";
+import { getEverythingNews, getTopHeadlinesNews} from "../stores/news/newsAction";
 import toast from "react-hot-toast";
 
 const indonesia = () => {
@@ -19,7 +19,7 @@ const indonesia = () => {
 			},
 		};
 
-		await dispatch(getEverythingNews({ data })).then((res) => {
+		await dispatch(getTopHeadlinesNews({ data })).then((res) => {
 			if (res.meta.requestStatus !== "fulfilled") {
 				toast.dismiss();
 				toast.error(res.payload.response.data.message);
