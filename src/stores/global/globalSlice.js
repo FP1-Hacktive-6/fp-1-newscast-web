@@ -10,11 +10,17 @@ const globalSlice = createSlice({
 	initialState,
 	reducers: {
 		saveNews: (state, { payload }) => {
-			const isNewsExist = state.archive_news.find(
-				(item) => item.title.toLowerCase() === payload.title.toLowerCase()
-			);
-			if (isNewsExist) {
-				state.error = "News is already in archive";
+			if (state.archive_news.length > 0) {
+				const isNewsExist = state.archive_news.find(
+					(item) => item.title.toLowerCase() === payload.title.toLowerCase()
+				);
+				if (isNewsExist) {
+					state.error = "News is already in archive";
+					state.error = null;
+				} else {
+					state.archive_news = [...state.archive_news, payload];
+					state.error = null;
+				}
 			} else {
 				state.archive_news = [...state.archive_news, payload];
 				state.error = null;
@@ -22,7 +28,7 @@ const globalSlice = createSlice({
 		},
 		unsaveNews: (state, { payload }) => {
 			state.archive_news = state.archive_news.filter(
-				(news) => news.title.toLowerCase() !== payload.toLowerCase()
+				(news) => news.title.toLowerCase() !== payload.title.toLowerCase()
 			);
 			state.error = null;
 		},
