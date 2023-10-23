@@ -14,10 +14,12 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 	<React.StrictMode>
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
-				<Navbar />
 				<Toaster position="top-right" />
-				<RouterProvider router={router} />
-				<Footer />
+				<div className="flex flex-col min-h-screen justify-between ">
+					<Navbar />
+					<RouterProvider router={router} />
+					<Footer />
+				</div>
 			</PersistGate>
 		</Provider>
 	</React.StrictMode>

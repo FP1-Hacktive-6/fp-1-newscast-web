@@ -2,11 +2,14 @@ import { useState } from "react";
 import Logo from "../assets/logo.png";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useDispatch } from "react-redux";
+import { getEverythingNews } from "../stores/news/newsAction";
+import toast from "react-hot-toast";
 
 const navigation = [
 	{ name: "Indonesia", href: "/indonesia", current: false },
 	{ name: "Progamming", href: "/programming", current: false },
-	{ name: "Covid", href: "/covid_19", current: false },
+	{ name: "Covid", href: "/covid", current: false },
 	{ name: "Saved", href: "/saved", current: false },
 ];
 
@@ -17,13 +20,35 @@ function classNames(...classes) {
 export default function Example() {
 	const [searchQuery, setSearchQuery] = useState("");
 	const [activeLink, setActiveLink] = useState(window.location.pathname);
+	const dispatch = useDispatch();
 
 	const handleSearch = (event) => {
 		setSearchQuery(event.target.value);
-		// Call your API within the search query.
 	};
 
 	const isIntheRootRoute = window.location.pathname === "/";
+
+	const handleSearchNews = async () => {
+		if (searchQuery === "") {
+			toast.dismiss();
+			toast.error("Search is empty");
+			return;
+		}
+
+		const data = {
+			params: {
+				q: searchQuery,
+			},
+		};
+
+		await dispatch(getEverythingNews({ data })).then((res) => {
+			if (res.meta.requestStatus !== "fulfilled") {
+				toast.dismiss();
+				toast.error(res.payload.response.data.message);
+				return;
+			}
+		});
+	};
 
 	return (
 		<Disclosure as="nav" className="bg-gray-800">
@@ -87,10 +112,7 @@ export default function Example() {
 										className="px-1 py-2 text-sm text-white bg-gray-700 rounded-md"
 									/>
 									<button
-										onClick={() => {
-											// Call your API and use searchQuery.
-											console.log("Performing search:", searchQuery);
-										}}
+										onClick={handleSearchNews}
 										className="px-2 py-2 ml-2 text-sm text-white bg-gray-700 rounded-md">
 										Search
 									</button>
