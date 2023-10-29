@@ -22,8 +22,8 @@ const Programming = () => {
 		const data = {
 			params: {
 				q: "programming",
-				page: 1,
-				pageSize: 12,
+				page: currentPage,
+				pageSize,
 			},
 		};
 
