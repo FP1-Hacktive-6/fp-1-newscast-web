@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import "rc-pagination/assets/index.css";
 import { Provider } from "react-redux";
 import { store, persistor } from "./stores";
 import { Toaster } from "react-hot-toast";
@@ -17,7 +18,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 				<Toaster position="top-right" />
 				<div className="flex flex-col min-h-screen justify-between ">
 					<Navbar />
-					<RouterProvider router={router} />
+					<main className="w-full md:max-w-7xl mx-auto">
+						<RouterProvider router={router} />
+					</main>
 					<Footer />
 				</div>
 			</PersistGate>

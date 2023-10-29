@@ -1,13 +1,20 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { getEverythingNews } from "../stores/news/newsAction";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import NewsCard from "../components/news-card";
+import Loading from "../components/loading";
+import Pagination from "rc-pagination";
 
 const Covid = () => {
 	const dispatch = useDispatch();
-	const { isLoading, error, data } = useSelector((state) => state.news);
+	const { isLoading, error, data, totalResults } = useSelector(
+		(state) => state.news
+	);
+	const [currentPage, setCurrentPage] = useState(1);
+	const totalItems = totalResults;
+	const pageSize = 10;
 
 	// contoh penggunaan
 	const handleGetAllNews = async () => {
@@ -15,8 +22,8 @@ const Covid = () => {
 		const data = {
 			params: {
 				q: "covid",
-				page: 1,
-				pageSize: 12,
+				page: currentPage,
+				pageSize: pageSize,
 			},
 		};
 
@@ -29,9 +36,13 @@ const Covid = () => {
 		});
 	};
 
+	const handlePageChange = (page) => {
+		setCurrentPage(page);
+	};
+
 	useEffect(() => {
 		handleGetAllNews();
-	}, []);
+	}, [currentPage]);
 
 	if (error) {
 		return <h1>Opps Error here</h1>;
@@ -40,15 +51,32 @@ const Covid = () => {
 	return (
 		<div className="p-4">
 			<h1 className="text-5xl font-bold text-center mb-10">Covid 19 News</h1>
-			<div className="w-full p-3 text-justify grid grid-cols-1 gap-2  md:grid-cols-2 md:gap-3 xl:grid-cols-3 xl:gap-4 aspect-[4/3]">
-				{isLoading ? (
-					<h1>Loading...</h1>
-				) : (
-					data.map((item, idx) => (
-						<NewsCard item={item} key={idx} category="covid 19" />
-					))
-				)}
-			</div>
+
+			{isLoading ? (
+				<div className="flex justify-center">
+					<Loading />
+				</div>
+			) : (
+				<div className="grid grid-cols-1 md:grid-cols-2  gap-5">
+					{data.length === 0 ? (
+						<div className="text-center">
+							<h1>No Item Found</h1>
+						</div>
+					) : (
+						data.map((item, idx) => (
+							<NewsCard item={item} category="Covid 19" key={idx} />
+						))
+					)}
+					<div className="mt-5">
+						<Pagination
+							current={currentPage}
+							total={totalItems}
+							pageSize={pageSize}
+							onChange={handlePageChange}
+						/>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 };
