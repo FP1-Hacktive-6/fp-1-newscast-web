@@ -2,8 +2,6 @@ import { useState } from "react";
 import Logo from "../assets/logo.png";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useDispatch } from "react-redux";
-import { getEverythingNews } from "../stores/news/newsAction";
 import toast from "react-hot-toast";
 
 const navigation = [
@@ -20,7 +18,6 @@ function classNames(...classes) {
 export default function Example() {
 	const [searchQuery, setSearchQuery] = useState("");
 	const [activeLink, setActiveLink] = useState(window.location.pathname);
-	const dispatch = useDispatch();
 
 	const handleSearch = (event) => {
 		setSearchQuery(event.target.value);
@@ -29,25 +26,21 @@ export default function Example() {
 	const isIntheRootRoute = window.location.pathname === "/";
 
 	const handleSearchNews = async () => {
-		if (searchQuery === "") {
+		const query = new URL(window.location.href);
+		query.searchParams.set("search", searchQuery);
+
+		const previousSearch = query.searchParams.get("search");
+
+		if (!previousSearch) {
 			toast.dismiss();
 			toast.error("Search is empty");
+			query.searchParams.delete("search");
+			window.history.pushState({}, "", query.toString());
 			return;
 		}
 
-		const data = {
-			params: {
-				q: searchQuery,
-			},
-		};
-
-		await dispatch(getEverythingNews({ data })).then((res) => {
-			if (res.meta.requestStatus !== "fulfilled") {
-				toast.dismiss();
-				toast.error(res.payload.response.data.message);
-				return;
-			}
-		});
+		window.history.pushState({}, "", query.toString());
+		window.location.replace(query);
 	};
 
 	return (
@@ -67,7 +60,7 @@ export default function Example() {
 									)}
 								</Disclosure.Button>
 							</div>
-							<div className="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
+							<div className="flex items-center justify-center flex-1  sm:justify-start">
 								<a className="flex items-center flex-shrink-0" href="/">
 									<img
 										className="block w-auto h-12 lg:hidden"
