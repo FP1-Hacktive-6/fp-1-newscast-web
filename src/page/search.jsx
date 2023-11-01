@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getEverythingNews } from "./stores/news/newsAction";
+import { getEverythingNews } from "../stores/news/newsAction";
 import toast from "react-hot-toast";
-import NewsCard from "./components/news-card";
-import Loading from "./components/loading";
+import NewsCard from "../components/news-card";
+import Loading from "../components/loading";
 import Pagination from "rc-pagination";
 
-const App = () => {
+const Search = () => {
 	const dispatch = useDispatch();
 	const { isLoading, error, data, totalResults } = useSelector(
 		(state) => state.news
 	);
-	const [search, setSearch] = useState();
 	const url = new URL(window.location.href);
-	const currentSearch = url.searchParams.get("search");
+	const [search, setSearch] = useState(url.searchParams.get("q"));
+	const currentSearch = url.searchParams.get("q");
 	const [currentPage, setCurrentPage] = useState(1);
 	const totalItems = totalResults;
 	const pageSize = 10;
@@ -25,7 +25,7 @@ const App = () => {
 			params: {
 				page: currentPage,
 				pageSize,
-				q: search ? search : "us",
+				q: search,
 				language: "en",
 			},
 		};
@@ -37,6 +37,8 @@ const App = () => {
 				return;
 			}
 		});
+
+		console.log(search);
 	};
 	const handlePageChange = (page) => {
 		setCurrentPage(page);
@@ -49,7 +51,9 @@ const App = () => {
 	}, [url.href, currentSearch]);
 
 	useEffect(() => {
-		handleGetAllNewsBasedOnCountry();
+		if (currentSearch) {
+			handleGetAllNewsBasedOnCountry();
+		}
 	}, [url.href, currentSearch, currentPage]);
 
 	if (error) {
@@ -59,7 +63,7 @@ const App = () => {
 	return (
 		<div className="p-5">
 			<h1 className="text-5xl font-bold text-center mb-10">
-				Displays {search ? `News About ${search}` : "All News"}
+				Displays News About {search}
 			</h1>
 			{isLoading ? (
 				<div className="flex justify-center">
@@ -90,4 +94,4 @@ const App = () => {
 	);
 };
 
-export default App;
+export default Search;

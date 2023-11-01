@@ -23,24 +23,21 @@ export default function Example() {
 		setSearchQuery(event.target.value);
 	};
 
-	const isIntheRootRoute = window.location.pathname === "/";
-
 	const handleSearchNews = async () => {
 		const query = new URL(window.location.href);
-		query.searchParams.set("search", searchQuery);
+		query.searchParams.set("q", searchQuery);
 
-		const previousSearch = query.searchParams.get("search");
+		const previousSearch = query.searchParams.get("q");
 
 		if (!previousSearch) {
 			toast.dismiss();
 			toast.error("Search is empty");
-			query.searchParams.delete("search");
+			query.searchParams.delete("q");
 			window.history.pushState({}, "", query.toString());
 			return;
 		}
 
-		window.history.pushState({}, "", query.toString());
-		window.location.replace(query);
+		window.location.href = "/search" + query.search;
 	};
 
 	return (
@@ -95,22 +92,20 @@ export default function Example() {
 									</div>
 								</div>
 							</div>
-							{isIntheRootRoute ? (
-								<div className="flex ml-4">
-									<input
-										type="text"
-										placeholder="Search"
-										value={searchQuery}
-										onChange={handleSearch}
-										className="px-1 py-2 text-sm text-white bg-gray-700 rounded-md"
-									/>
-									<button
-										onClick={handleSearchNews}
-										className="px-2 py-2 ml-2 text-sm text-white bg-gray-700 rounded-md">
-										Search
-									</button>
-								</div>
-							) : null}
+							<div className="flex ml-4">
+								<input
+									type="text"
+									placeholder="Search"
+									value={searchQuery}
+									onChange={handleSearch}
+									className="px-1 py-2 text-sm text-white bg-gray-700 rounded-md"
+								/>
+								<button
+									onClick={handleSearchNews}
+									className="px-2 py-2 ml-2 text-sm text-white bg-gray-700 rounded-md">
+									Search
+								</button>
+							</div>
 						</div>
 					</div>
 					<Disclosure.Panel className="sm:hidden">

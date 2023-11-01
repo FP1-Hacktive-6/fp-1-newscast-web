@@ -4,6 +4,7 @@ import Covid from "../page/covid";
 import Programming from "../page/programming";
 import Indonesia from "../page/indonesia";
 import Saved from "../page/saved";
+import Search from "../page/search";
 
 export const router = createBrowserRouter([
 	{
@@ -25,5 +26,9 @@ export const router = createBrowserRouter([
 	{
 		path: "/saved",
 		Component: Saved,
+	},
+	{
+		path: "/search",
+		Component: Search,
 	},
 ]);
