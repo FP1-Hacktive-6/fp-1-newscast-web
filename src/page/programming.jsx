@@ -1,32 +1,29 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getEverythingNews } from "./stores/news/newsAction";
+import { useDispatch } from "react-redux";
+import { getEverythingNews } from "../stores/news/newsAction";
 import toast from "react-hot-toast";
-import NewsCard from "./components/news-card";
-import Loading from "./components/loading";
+import { useSelector } from "react-redux";
+import NewsCard from "../components/news-card";
+import Loading from "../components/loading";
 import Pagination from "rc-pagination";
 
-const App = () => {
+const Programming = () => {
 	const dispatch = useDispatch();
 	const { isLoading, error, data, totalResults } = useSelector(
 		(state) => state.news
 	);
-	const [search, setSearch] = useState();
-	const url = new URL(window.location.href);
-	const currentSearch = url.searchParams.get("search");
 	const [currentPage, setCurrentPage] = useState(1);
 	const totalItems = totalResults;
 	const pageSize = 10;
 
 	// contoh penggunaan
-	const handleGetAllNewsBasedOnCountry = async () => {
+	const handleGetAllNews = async () => {
 		// data params bisa dimasukin disini ( check available params di doc newsapi)
 		const data = {
 			params: {
+				q: "programming",
 				page: currentPage,
 				pageSize,
-				q: search ? search : "us",
-				language: "en",
 			},
 		};
 
@@ -38,19 +35,14 @@ const App = () => {
 			}
 		});
 	};
+
 	const handlePageChange = (page) => {
 		setCurrentPage(page);
 	};
 
 	useEffect(() => {
-		if (currentSearch) {
-			setSearch(currentSearch);
-		}
-	}, [url.href, currentSearch]);
-
-	useEffect(() => {
-		handleGetAllNewsBasedOnCountry();
-	}, [url.href, currentSearch, currentPage]);
+		handleGetAllNews();
+	}, [currentPage]);
 
 	if (error) {
 		return <h1>Opps Error here</h1>;
@@ -58,9 +50,8 @@ const App = () => {
 
 	return (
 		<div className="p-5">
-			<h1 className="text-5xl font-bold text-center mb-10">
-				Displays {search ? `News About ${search}` : "All News"}
-			</h1>
+			<h1 className="text-5xl font-bold text-center mb-10">Programming News</h1>
+
 			{isLoading ? (
 				<div className="flex justify-center">
 					<Loading />
@@ -73,7 +64,7 @@ const App = () => {
 						</div>
 					) : (
 						data.map((item, idx) => (
-							<NewsCard item={item} category="Top headlines" key={idx} />
+							<NewsCard item={item} category="Programming" key={idx} />
 						))
 					)}
 					<div className="mt-5">
@@ -89,5 +80,4 @@ const App = () => {
 		</div>
 	);
 };
-
-export default App;
+export default Programming;
